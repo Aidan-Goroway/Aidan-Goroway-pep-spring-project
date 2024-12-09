@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Message;
+import com.example.service.AccountService;
 import com.example.service.MessageService;
 
 /**
@@ -25,14 +27,16 @@ import com.example.service.MessageService;
  * where applicable as well as the @ResponseBody and @PathVariable annotations. You should
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
-@Controller
-@RequestMapping("message")
+@RestController
+// @RequestMapping("message")
 public class SocialMediaController {
 
     private MessageService messageService;
+    private AccountService accountService;
 
-    public SocialMediaController(MessageService messageService){
+    public SocialMediaController(MessageService messageService, AccountService accountService){
         this.messageService = messageService;
+        this.accountService = accountService;
     }
 
     /*
@@ -50,7 +54,7 @@ public class SocialMediaController {
     The response status should be 200, which is the default. The new message should be persisted to the database.
     If the creation of the message is not successful, the response status should be 400. (Client error)
     */
-    @PostMapping("create")
+    @PostMapping("/messages")
     public @ResponseBody ResponseEntity<Message> createMessage(@RequestBody Message newMessage){
         if (newMessage.getMessageText() != "" ||
             newMessage.getMessageText().length() < 256){ //add validity check later
@@ -71,7 +75,7 @@ public class SocialMediaController {
     It is expected for the list to simply be empty if there are no messages.
     The response status should always be 200, which is the default.
     */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping("/messages")
     public @ResponseBody ResponseEntity<List<Message>> getAllMessages(){
         List<Message> allMessages = messageService.getAllMessages();
         return ResponseEntity.status(HttpStatus.OK).body(allMessages);
@@ -86,7 +90,7 @@ public class SocialMediaController {
     It is expected for the response body to simply be empty if there is no such message.
     The response status should always be 200, which is the default.
     */
-    @GetMapping(params = "messageId")
+    @GetMapping("/messages/{messageId}")
     public @ResponseBody ResponseEntity<Message> getMessageById(@RequestParam int messageId){
         return new ResponseEntity<>(messageService.getMessageById(messageId), HttpStatus.OK); //OK = 200
     }
@@ -104,7 +108,7 @@ public class SocialMediaController {
     This is because the DELETE verb is intended to be idempotent, ie, multiple calls to the DELETE endpoint should
         respond with the same type of response.
     */
-    @DeleteMapping("delete/{messageId}")
+    @DeleteMapping("/messages/{messageId}")
     public @ResponseBody ResponseEntity<String> deleteMessageById(@PathVariable int messageId){
         messageService.deleteMessageById(messageId);
         return ResponseEntity.ok("Message deleted.");
@@ -127,7 +131,7 @@ public class SocialMediaController {
 
     If the update of the message is not successful for any reason, the response status should be 400. (Client error)
     */
-    @PatchMapping("/patch")
+    @PatchMapping("/messages/{messageId}")
     public @ResponseBody ResponseEntity<String> patchMessageById(@RequestParam int messageId, @RequestParam String messageText){
         messageService.patchMessageById(messageId, messageText);
         return ResponseEntity.ok("Message updated.");
@@ -143,7 +147,7 @@ public class SocialMediaController {
     It is expected for the list to simply be empty if there are no messages.
     The response status should always be 200, which is the default.
     */
-    @GetMapping("postedBy/{postedBy}")
+    @GetMapping("/accounts/{accountId}/messages")
     public @ResponseBody ResponseEntity<List<Message>> getMessagesByUser(@PathVariable int user){
         List<Message> messagesFromUser = messageService.getMessagesByUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(messagesFromUser);

@@ -7,22 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Message;
+import com.example.repository.MessageRepository;
 
 
 @Service
-public class MessageService {
-
-    private List<Message> messageList = new ArrayList<>();
-    private MessageService messageService;
+public class MessageService{
+    
+    private MessageRepository messageRepository;
 
     @Autowired
+    public MessageService(MessageRepository messageRepository){
+        this.messageRepository = messageRepository;
+    }
+
+    // @Autowired
     public List<Message> getAllMessages(){
-        return ;
+        return messageRepository.findAll();
+        // return mes;
     }
 
-    @Autowired
-    public Message getMessageById(){
-        return ;
-    }
+    // // @Autowired
+    // public Message getMessageById(){
+    //     // return ;
+    // }
 
 }
