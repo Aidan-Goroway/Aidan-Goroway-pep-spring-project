@@ -14,4 +14,5 @@ public interface MessageRepository extends JpaRepository <Message, Integer>{
      */
     public List<Message> findByPostedBy(int id);
     
+    public Message patchById();
 }

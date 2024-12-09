@@ -20,15 +20,30 @@ public class MessageService{
         this.messageRepository = messageRepository;
     }
 
-    // @Autowired
+    // Handler 4
     public List<Message> getAllMessages(){
         return messageRepository.findAll();
         // return mes;
     }
 
-    // // @Autowired
-    // public Message getMessageById(){
-    //     // return ;
+    // Handler 5
+    public Message getMessageById(int messageId){
+        return messageRepository.getById(messageId);
+    }
+
+    // Handler 6
+    public Message deleteMessageById(int messageId){
+        return messageRepository.deleteById(messageId);
+    }
+
+    //Handler 7
+    // public Message patchMessageById(int messageId, String messageText){
+    //     return messageRepository.
     // }
+
+    //Handler 8
+    public List<Message> getMessagesByUser(int userId){
+        return messageRepository.findByPostedBy(userId);
+    }
 
 }
