@@ -109,9 +109,10 @@ public class SocialMediaController {
         respond with the same type of response.
     */
     @DeleteMapping("/messages/{messageId}")
-    public @ResponseBody ResponseEntity<String> deleteMessageById(@PathVariable int messageId){
-        messageService.deleteMessageById(messageId);
-        return ResponseEntity.ok("Message deleted.");
+    public @ResponseBody ResponseEntity<Message> deleteMessageById(@PathVariable int messageId){
+        // messageService.deleteMessageById(messageId);
+        // return ResponseEntity.ok("Message deleted.");
+        return new ResponseEntity<>(messageService.deleteMessageById(messageId), HttpStatus.OK);
     }
 
     /*
@@ -132,9 +133,10 @@ public class SocialMediaController {
     If the update of the message is not successful for any reason, the response status should be 400. (Client error)
     */
     @PatchMapping("/messages/{messageId}")
-    public @ResponseBody ResponseEntity<String> patchMessageById(@RequestParam int messageId, @RequestParam String messageText){
-        messageService.patchMessageById(messageId, messageText);
-        return ResponseEntity.ok("Message updated.");
+    public @ResponseBody ResponseEntity<Message> patchMessageById(@RequestParam int messageId, @RequestParam String messageText){
+        // messageService.patchMessageById(messageId, messageText);
+        // return ResponseEntity.ok("Message updated.");
+        return new ResponseEntity<>(messageService.patchMessageById(messageId, messageText), HttpStatus.OK);
     }
 
     /*

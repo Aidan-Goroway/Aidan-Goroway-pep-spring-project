@@ -20,6 +20,11 @@ public class MessageService{
         this.messageRepository = messageRepository;
     }
 
+    // Handler 3
+    public Message postNewMessage(Message message){
+        return null;
+    }
+
     // Handler 4
     public List<Message> getAllMessages(){
         return messageRepository.findAll();
@@ -33,15 +38,17 @@ public class MessageService{
 
     // Handler 6
     public Message deleteMessageById(int messageId){
-        return messageRepository.deleteById(messageId);
+        return null;
+        // return messageRepository.deleteById(messageId);
     }
 
-    //Handler 7
-    // public Message patchMessageById(int messageId, String messageText){
-    //     return messageRepository.
-    // }
+    // Handler 7
+    public Message patchMessageById(int messageId, String messageText){
+        // return messageRepository.
+        return null;
+    }
 
-    //Handler 8
+    // Handler 8
     public List<Message> getMessagesByUser(int userId){
         return messageRepository.findByPostedBy(userId);
     }
