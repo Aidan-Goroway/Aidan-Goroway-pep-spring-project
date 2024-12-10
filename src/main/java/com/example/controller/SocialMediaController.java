@@ -55,7 +55,7 @@ public class SocialMediaController {
     */
     @PostMapping("/messages")
     public @ResponseBody ResponseEntity<Message> createMessage(@RequestBody Message newMessage){
-        if (newMessage.getMessageText() != "" ||
+        if (newMessage.getMessageText() != "" &&
             newMessage.getMessageText().length() < 256){ //add validity check later
             messageService.postNewMessage(newMessage); //update service class
             return ResponseEntity.ok(newMessage);
@@ -81,7 +81,7 @@ public class SocialMediaController {
     }
 
     /*
-    HANLDER 5: Get Message by messageId
+    HANLDER 5: Get Message by messageId [DONE]
 
     As a user, I should be able to submit a GET request on the endpoint GET localhost:8080/messages/{messageId}.
 
@@ -90,13 +90,9 @@ public class SocialMediaController {
     The response status should always be 200, which is the default.
     */
     @GetMapping("/messages/{messageId}")
-    public @ResponseBody ResponseEntity<Message> getMessageById(@RequestParam int messageId){
-        // if (messageService.getMessageById(messageId) == null){
-        //     return new ResponseEntity<>(messageService.getMessageById(messageId), HttpStatus.valueOf(200));
-        // }
+    public ResponseEntity<Message> getMessageById(@PathVariable int messageId){
         Message message = messageService.getMessageById(messageId);
         return ResponseEntity.status(HttpStatus.OK).body(message);
-        // return new ResponseEntity<>(messageService.getMessageById(messageId), HttpStatus.valueOf(200)); //OK = 200
     }
 
     /*

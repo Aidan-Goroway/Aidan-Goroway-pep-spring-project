@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,18 @@ public class MessageService{
 
     // Handler 4 [DONE]
     public List<Message> getAllMessages(){
-        return (List<Message>) messageRepository.findAll();
+        return messageRepository.findAll();
     }
 
     // Handler 5
     public Message getMessageById(int messageId){
-        // return messageRepository.findById(messageId).orElseThrow(); //TODO: Fix later
-        return messageRepository.findByMessageId(messageId);
+        Optional<Message> message = messageRepository.findById(messageId); //TODO: Fix later
+        if (message.isPresent()){
+            return message.get();
+        }
+        else{
+            return null;
+        }
     }
 
     // Handler 6
