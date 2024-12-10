@@ -44,8 +44,20 @@ public class MessageService{
 
     // Handler 6
     public Message deleteMessageById(int messageId){
-        messageRepository.deleteById(messageId);
-        return messageRepository.getById(messageId);
+        Optional<Message> message = messageRepository.findById(messageId);
+        
+        // messageRepository.deleteById(messageId);
+        if (message.isPresent()){
+            messageRepository.deleteById(messageId);
+            return message.get();
+        }
+        else {
+            return null;
+        }
+
+
+        // messageRepository.deleteById(messageId);
+        // return messageRepository.getById(messageId);
     }
 
     // Handler 7

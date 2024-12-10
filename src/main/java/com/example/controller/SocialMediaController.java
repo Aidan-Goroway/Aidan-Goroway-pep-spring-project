@@ -109,10 +109,12 @@ public class SocialMediaController {
         respond with the same type of response.
     */
     @DeleteMapping("/messages/{messageId}")
-    public @ResponseBody ResponseEntity<Message> deleteMessageById(@PathVariable int messageId){
+    public ResponseEntity<Message> deleteMessageById(@PathVariable int messageId){
         // messageService.deleteMessageById(messageId);
         // return ResponseEntity.ok("Message deleted.");
-        return new ResponseEntity<>(messageService.deleteMessageById(messageId), HttpStatus.OK);
+        Message message = messageService.deleteMessageById(messageId);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+        // return new ResponseEntity<>(messageService.deleteMessageById(messageId), HttpStatus.OK);
     }
 
     /*
