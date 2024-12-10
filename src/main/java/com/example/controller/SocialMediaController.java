@@ -28,7 +28,6 @@ import com.example.service.MessageService;
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
 @RestController
-// @RequestMapping("message")
 public class SocialMediaController {
 
     private MessageService messageService;
@@ -67,7 +66,7 @@ public class SocialMediaController {
     }
 
     /*
-    HANDLER 4: Get all messages
+    HANDLER 4: Get all messages [DONE?]
 
     As a user, I should be able to submit a GET request on the endpoint GET localhost:8080/messages.
 
@@ -92,7 +91,12 @@ public class SocialMediaController {
     */
     @GetMapping("/messages/{messageId}")
     public @ResponseBody ResponseEntity<Message> getMessageById(@RequestParam int messageId){
-        return new ResponseEntity<>(messageService.getMessageById(messageId), HttpStatus.OK); //OK = 200
+        // if (messageService.getMessageById(messageId) == null){
+        //     return new ResponseEntity<>(messageService.getMessageById(messageId), HttpStatus.valueOf(200));
+        // }
+        Message message = messageService.getMessageById(messageId);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+        // return new ResponseEntity<>(messageService.getMessageById(messageId), HttpStatus.valueOf(200)); //OK = 200
     }
 
     /*

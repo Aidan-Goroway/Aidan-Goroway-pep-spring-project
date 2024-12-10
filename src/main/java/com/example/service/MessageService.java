@@ -25,27 +25,29 @@ public class MessageService{
         return null;
     }
 
-    // Handler 4
+    // Handler 4 [DONE]
     public List<Message> getAllMessages(){
-        return messageRepository.findAll();
-        // return mes;
+        return (List<Message>) messageRepository.findAll();
     }
 
     // Handler 5
     public Message getMessageById(int messageId){
-        return messageRepository.getById(messageId);
+        // return messageRepository.findById(messageId).orElseThrow(); //TODO: Fix later
+        return messageRepository.findByMessageId(messageId);
     }
 
     // Handler 6
     public Message deleteMessageById(int messageId){
-        return null;
-        // return messageRepository.deleteById(messageId);
+        messageRepository.deleteById(messageId);
+        return messageRepository.getById(messageId);
     }
 
     // Handler 7
-    public Message patchMessageById(int messageId, String messageText){
-        // return messageRepository.
-        return null;
+    public Message patchMessageById(int messageId, String messageText){ //TODO: fix later?
+        Message message = messageRepository.findById(messageId).orElseThrow(); //
+        message.setMessageText(messageText);
+        messageRepository.save(message);
+        return message;
     }
 
     // Handler 8

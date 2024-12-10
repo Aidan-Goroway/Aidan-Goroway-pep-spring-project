@@ -8,11 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MessageRepository extends JpaRepository <Message, Integer>{
 
-    /**
-     * Get all messages, return in list.
-     * @return List object of Message type. Returns emptylist if there are no messages.
-     */
     public List<Message> findByPostedBy(int id);
+
+    public Message findByMessageId(int messageId);
     
-    public Message patchById();
+    // public Message patchById(int id, String messageText); //
 }
