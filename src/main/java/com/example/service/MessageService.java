@@ -71,8 +71,8 @@ public class MessageService{
     }
 
     // Handler 8
-    public List<Message> getMessagesByUser(int userId){
-        return messageRepository.findByPostedBy(userId);
+    public List<Message> getMessagesByUser(int postedBy){
+        return messageRepository.findByPostedBy(postedBy);
     }
 
 }

@@ -219,8 +219,8 @@ public class SocialMediaController {
     The response status should always be 200, which is the default.
     */
     @GetMapping("/accounts/{accountId}/messages")
-    public @ResponseBody ResponseEntity<List<Message>> getMessagesByUser(@PathVariable int user){
-        List<Message> messagesFromUser = messageService.getMessagesByUser(user);
+    public @ResponseBody ResponseEntity<List<Message>> getMessagesByUser(@PathVariable int accountId){
+        List<Message> messagesFromUser = messageService.getMessagesByUser(accountId);
         return ResponseEntity.status(HttpStatus.OK).body(messagesFromUser);
     }
 
