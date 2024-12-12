@@ -115,11 +115,12 @@ public class SocialMediaController {
     If the creation of the message is not successful, the response status should be 400. (Client error)
     */
     @PostMapping("/messages")
-    public @ResponseBody ResponseEntity<Message> createMessage(@RequestBody Message newMessage){
-        if (newMessage.getMessageText() != "" &&
-            newMessage.getMessageText().length() < 256){ //add validity check later
-            messageService.postNewMessage(newMessage); //update service class
-            return ResponseEntity.ok(newMessage);
+    public @ResponseBody ResponseEntity<Message> createMessage(@RequestBody Message message){
+        if (message.getMessageText() != "" &&
+            message.getMessageText().length() < 256 &&
+            messageService.postNewMessage(message) != null){ //add validity check later
+                // messageService.postNewMessage(newMessage)
+                return ResponseEntity.ok(message);
         }
         else{
             return ResponseEntity.status(400).body(null); //this looks questionable
