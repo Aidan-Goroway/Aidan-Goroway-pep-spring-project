@@ -25,13 +25,14 @@ public class AccountService {
     // Handler 2
     public Account loginAccount(Account account){
 
-        // accountRepository.
-        // if (){
-        //     return account;
-        // }
-        // else {
-        //     return null;
-        // }
-        return null;
+        String searchUser = account.getUsername();
+        String searchPass = account.getPassword();
+        
+        if (accountRepository.existsByUsernameAndPassword(searchUser, searchPass)){
+            return accountRepository.findByUsername(searchUser).get();
+        }
+        else {
+            return null;
+        }
     }
 }

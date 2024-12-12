@@ -51,8 +51,8 @@ public class SocialMediaController {
     The response status should be 200 OK, which is the default.
     If the login is not successful, the response status should be 401. (Unauthorized)
     */
-    @GetMapping("/login")
-    public @ResponceBody ResponseEntity<Account> loginUser(@PathVariable Account account){
+    @PostMapping("/login")
+    public @ResponceBody ResponseEntity<Account> loginUser(@RequestBody Account account){
 
         Account verifiedAccount = accountService.loginAccount(account);
 
@@ -164,7 +164,7 @@ public class SocialMediaController {
     If the update of the message is not successful for any reason, the response status should be 400. (Client error)
     */
     @PatchMapping("/messages/{messageId}")
-    public ResponseEntity<Integer> patchMessageById(@PathVariable int messageId, @PathVariable String messageText){
+    public ResponseEntity<Integer> patchMessageById(@PathVariable int messageId, @RequestParam String messageText){
         Message message = messageService.patchMessageById(messageId, messageText);
         if (message != null){
            return ResponseEntity.status(HttpStatus.valueOf(200)).body(1);

@@ -64,20 +64,15 @@ public class MessageService{
         Optional<Message> optionalMessage = messageRepository.findById(messageId);
         
         if (optionalMessage.isPresent()){
-            if (!optionalMessage.get().getMessageText().isBlank() &&
-                optionalMessage.get().getMessageText().length() < 256){
-                    Message message = optionalMessage.get();
+            Message message = optionalMessage.get();
+            if (message.getMessageText() != null &&
+                !message.getMessageText().isBlank() &&
+                message.getMessageText().length() < 256){
                     message.setMessageText(messageText);
                     return messageRepository.save(message);
             }
         }
         return null;
-
-
-        // Message message = messageRepository.findById(messageId).orElseThrow(); //
-        // message.setMessageText(messageText);
-        // messageRepository.save(message);
-        // return message;
     }
 
     // Handler 8
