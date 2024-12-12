@@ -41,7 +41,41 @@ public class SocialMediaController {
     }
 
     /*
-    HANDLER 2: Verify Account (Log in)
+    HANDLER 1: Create Account [DONE]
+
+    As a user, I should be able to create a new Account on the endpoint POST localhost:8080/register.
+    The body will contain a representation of a JSON Account, but will not contain an accountId.
+
+    The registration will be successful if and only if
+        - the username is not blank,
+        - the password is at least 4 characters long, 
+        - and an Account with that username does not already exist. 
+    If all these conditions are met, the response body should contain a JSON of the Account, including its accountId.
+
+    The response status should be 200 OK, which is the default. The new account should be persisted to the database.
+    If the registration is not successful due to a duplicate username, the response status should be 409. (Conflict)
+    If the registration is not successful for some other reason, the response status should be 400. (Client error)
+    */
+    @PostMapping("/register")
+    public @ResponseBody ResponseEntity<Account> registerAccount(@RequestBody Account account){
+        
+        int status = accountService.registerAccount(account);
+
+        switch (status) {
+            case 200:
+                return ResponseEntity.status(status).body(account);
+            case 409:
+                return ResponseEntity.status(status).body(null);
+            case 400:
+                return ResponseEntity.status(status).body(null);
+            default: //Should not return, but is probbaly safer to include anyway.
+                return ResponseEntity.status(status).body(null);
+        }
+
+    }
+
+    /*
+    HANDLER 2: Verify Account (Log in) [DONE]
 
     As a user, I should be able to verify my login on the endpoint POST localhost:8080/login.
     The request body will contain a JSON representation of an Account.
@@ -52,7 +86,7 @@ public class SocialMediaController {
     If the login is not successful, the response status should be 401. (Unauthorized)
     */
     @PostMapping("/login")
-    public @ResponceBody ResponseEntity<Account> loginUser(@RequestBody Account account){
+    public @ResponseBody ResponseEntity<Account> loginUser(@RequestBody Account account){
 
         Account verifiedAccount = accountService.loginAccount(account);
 
@@ -147,7 +181,7 @@ public class SocialMediaController {
     }
 
     /*
-    HANDLER 7: PATCH message's text by its messageId
+    HANDLER 7: PATCH message's text by its messageId TODO
 
     As a user, I should be able to submit a PATCH request on the endpoint PATCH localhost:8080/messages/{messageId}. 
     The request body should contain a new messageText values to replace the message identified by messageId. 

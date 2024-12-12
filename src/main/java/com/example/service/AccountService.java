@@ -17,9 +17,20 @@ public class AccountService {
     }
 
     // Handler 1
-    public Account registerAccount(){
+    public int registerAccount(Account account){
         
-        return null;
+        if (!account.getUsername().isBlank() &&
+            account.getPassword().length() >= 4 &&
+            !accountRepository.existsByUsername(account.getUsername())){
+                accountRepository.save(account);
+                return 200; //OK
+        }
+        else if (accountRepository.existsByUsername(account.getUsername())){
+            return 409; //CONFLICT
+        }
+        else{
+            return 400; //OTHER
+        }
     }
 
     // Handler 2
