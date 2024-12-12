@@ -33,7 +33,7 @@ public class MessageService{
 
     // Handler 5
     public Message getMessageById(int messageId){
-        Optional<Message> message = messageRepository.findById(messageId); //TODO: Fix later
+        Optional<Message> message = messageRepository.findById(messageId);
         if (message.isPresent()){
             return message.get();
         }
@@ -62,10 +62,23 @@ public class MessageService{
 
     // Handler 7
     public Message patchMessageById(int messageId, String messageText){ //TODO: fix later?
-        Message message = messageRepository.findById(messageId).orElseThrow(); //
-        message.setMessageText(messageText);
-        messageRepository.save(message);
-        return message;
+        Optional<Message> optionalMessage = messageRepository.findById(messageId);
+        if (optionalMessage.isPresent()){
+            if (!optionalMessage.get().getMessageText().isBlank() &&
+                optionalMessage.get().getMessageText().length() < 256){
+                    Message message = optionalMessage.get();
+                    message.setMessageText(messageText);
+                    messageRepository.save(message);
+                    return message;
+            }
+        }
+        return null;
+
+
+        // Message message = messageRepository.findById(messageId).orElseThrow(); //
+        // message.setMessageText(messageText);
+        // messageRepository.save(message);
+        // return message;
     }
 
     // Handler 8

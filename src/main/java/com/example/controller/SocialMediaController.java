@@ -66,7 +66,7 @@ public class SocialMediaController {
     }
 
     /*
-    HANDLER 4: Get all messages [DONE?]
+    HANDLER 4: Get all messages [DONE]
 
     As a user, I should be able to submit a GET request on the endpoint GET localhost:8080/messages.
 
@@ -96,7 +96,7 @@ public class SocialMediaController {
     }
 
     /*
-    HANDLER 6: Delete Message by messageId
+    HANDLER 6: Delete Message by messageId [DONE]
 
     As a User, I should be able to submit a DELETE request on the endpoint DELETE localhost:8080/messages/{messageId}.
 
@@ -109,12 +109,14 @@ public class SocialMediaController {
         respond with the same type of response.
     */
     @DeleteMapping("/messages/{messageId}")
-    public ResponseEntity<Message> deleteMessageById(@PathVariable int messageId){
-        // messageService.deleteMessageById(messageId);
-        // return ResponseEntity.ok("Message deleted.");
+    public ResponseEntity<Integer> deleteMessageById(@PathVariable int messageId){
         Message message = messageService.deleteMessageById(messageId);
-        return ResponseEntity.status(HttpStatus.OK).body(message);
-        // return new ResponseEntity<>(messageService.deleteMessageById(messageId), HttpStatus.OK);
+        if (message == null){ // Message does not exist
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(1);  
+        }
     }
 
     /*
@@ -135,10 +137,14 @@ public class SocialMediaController {
     If the update of the message is not successful for any reason, the response status should be 400. (Client error)
     */
     @PatchMapping("/messages/{messageId}")
-    public @ResponseBody ResponseEntity<Message> patchMessageById(@RequestParam int messageId, @RequestParam String messageText){
-        // messageService.patchMessageById(messageId, messageText);
-        // return ResponseEntity.ok("Message updated.");
-        return new ResponseEntity<>(messageService.patchMessageById(messageId, messageText), HttpStatus.OK);
+    public ResponseEntity<Integer> patchMessageById(@PathVariable int messageId, @PathVariable String messageText){
+        Message message = messageService.patchMessageById(messageId, messageText);
+        if (message != null){
+           return ResponseEntity.status(HttpStatus.valueOf(200)).body(1);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.valueOf(400)).body(null);
+        }
     }
 
     /*
