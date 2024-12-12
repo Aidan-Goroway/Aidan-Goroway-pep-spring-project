@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.entity.Account;
 import com.example.entity.Message;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
@@ -37,6 +39,31 @@ public class SocialMediaController {
         this.messageService = messageService;
         this.accountService = accountService;
     }
+
+    /*
+    HANDLER 2: Verify Account (Log in)
+
+    As a user, I should be able to verify my login on the endpoint POST localhost:8080/login.
+    The request body will contain a JSON representation of an Account.
+
+    The login will be successful if and only if the username and password provided in the request body JSON match a real account existing on the database.
+    If successful, the response body should contain a JSON of the account in the response body, including its accountId. 
+    The response status should be 200 OK, which is the default.
+    If the login is not successful, the response status should be 401. (Unauthorized)
+    */
+    @GetMapping("/login")
+    public @ResponceBody ResponseEntity<Account> loginUser(@PathVariable Account account){
+
+        Account verifiedAccount = accountService.loginAccount(account);
+
+        if (verifiedAccount != null){ //Account is real
+            return ResponseEntity.status(HttpStatus.valueOf(200)).body(verifiedAccount);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.valueOf(401)).body(null);
+        }
+    }
+
 
     /*
     HANDLER 3: Post new Message
@@ -143,7 +170,7 @@ public class SocialMediaController {
            return ResponseEntity.status(HttpStatus.valueOf(200)).body(1);
         }
         else{
-            return ResponseEntity.status(HttpStatus.valueOf(400)).body(null);
+            return ResponseEntity.status(HttpStatus.valueOf(404)).body(null);
         }
     }
 

@@ -18,11 +18,20 @@ public class AccountService {
 
     // Handler 1
     public Account registerAccount(){
+        
         return null;
     }
 
     // Handler 2
-    public Account loginAccount(){
+    public Account loginAccount(Account account){
+
+        // accountRepository.
+        // if (){
+        //     return account;
+        // }
+        // else {
+        //     return null;
+        // }
         return null;
     }
 }

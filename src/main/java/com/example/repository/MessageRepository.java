@@ -9,8 +9,4 @@ import org.springframework.stereotype.Repository;
 public interface MessageRepository extends JpaRepository <Message, Integer>{
 
     public List<Message> findByPostedBy(int id);
-
-    // public Message findByMessageId(int messageId);
-    
-    // public Message patchById(int id, String messageText); //
 }

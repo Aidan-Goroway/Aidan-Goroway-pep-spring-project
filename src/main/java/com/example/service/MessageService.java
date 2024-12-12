@@ -1,6 +1,5 @@
 package com.example.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,13 +62,13 @@ public class MessageService{
     // Handler 7
     public Message patchMessageById(int messageId, String messageText){ //TODO: fix later?
         Optional<Message> optionalMessage = messageRepository.findById(messageId);
+        
         if (optionalMessage.isPresent()){
             if (!optionalMessage.get().getMessageText().isBlank() &&
                 optionalMessage.get().getMessageText().length() < 256){
                     Message message = optionalMessage.get();
                     message.setMessageText(messageText);
-                    messageRepository.save(message);
-                    return message;
+                    return messageRepository.save(message);
             }
         }
         return null;
