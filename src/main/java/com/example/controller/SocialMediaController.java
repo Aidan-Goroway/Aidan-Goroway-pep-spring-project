@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -182,7 +183,7 @@ public class SocialMediaController {
     }
 
     /*
-    HANDLER 7: PATCH message's text by its messageId TODO
+    HANDLER 7: PATCH message's text by its messageId [DONE]
 
     As a user, I should be able to submit a PATCH request on the endpoint PATCH localhost:8080/messages/{messageId}. 
     The request body should contain a new messageText values to replace the message identified by messageId. 
@@ -199,13 +200,16 @@ public class SocialMediaController {
     If the update of the message is not successful for any reason, the response status should be 400. (Client error)
     */
     @PatchMapping("/messages/{messageId}")
-    public ResponseEntity<Integer> patchMessageById(@PathVariable int messageId, @RequestParam String messageText){
+    public ResponseEntity<Integer> patchMessageById(@PathVariable int messageId, @RequestBody Map<String, String> requestBody) {
+        
+        String messageText = requestBody.get("messageText");
         Message message = messageService.patchMessageById(messageId, messageText);
+
         if (message != null){
            return ResponseEntity.status(HttpStatus.valueOf(200)).body(1);
         }
         else{
-            return ResponseEntity.status(HttpStatus.valueOf(404)).body(null);
+            return ResponseEntity.status(HttpStatus.valueOf(400)).body(null);
         }
     }
 

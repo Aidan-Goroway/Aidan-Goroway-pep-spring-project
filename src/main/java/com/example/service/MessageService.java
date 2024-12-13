@@ -63,14 +63,14 @@ public class MessageService{
     }
 
     // Handler 7
-    public Message patchMessageById(int messageId, String messageText){ //TODO: fix later?
+    public Message patchMessageById(int messageId, String messageText){
         Optional<Message> optionalMessage = messageRepository.findById(messageId);
         
         if (optionalMessage.isPresent()){
-            Message message = optionalMessage.get();
-            if (message.getMessageText() != null &&
-                !message.getMessageText().isBlank() &&
-                message.getMessageText().length() < 256){
+            if (messageText != null &&
+                !messageText.isBlank() &&
+                messageText.length() < 256){
+                    Message message = optionalMessage.get();
                     message.setMessageText(messageText);
                     return messageRepository.save(message);
             }
