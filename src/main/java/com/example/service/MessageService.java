@@ -25,12 +25,14 @@ public class MessageService{
 
     // Handler 3
     public Message postNewMessage(Message message){
+
         if (accountRepository.existsById(message.getPostedBy())){
             return messageRepository.save(message);
         }
         else{
             return null;
         }
+
     }
 
     // Handler 4
@@ -40,7 +42,9 @@ public class MessageService{
 
     // Handler 5
     public Message getMessageById(int messageId){
+
         Optional<Message> message = messageRepository.findById(messageId);
+
         if (message.isPresent()){
             return message.get();
         }
@@ -51,6 +55,7 @@ public class MessageService{
 
     // Handler 6
     public Message deleteMessageById(int messageId){
+
         Optional<Message> message = messageRepository.findById(messageId);
         
         if (message.isPresent()){
@@ -64,6 +69,7 @@ public class MessageService{
 
     // Handler 7
     public Message patchMessageById(int messageId, String messageText){
+        
         Optional<Message> optionalMessage = messageRepository.findById(messageId);
         
         if (optionalMessage.isPresent()){
