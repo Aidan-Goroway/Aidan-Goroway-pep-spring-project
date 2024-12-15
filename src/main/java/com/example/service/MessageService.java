@@ -18,7 +18,7 @@ public class MessageService{
     private AccountRepository accountRepository; //needed for postNewMessage
 
     @Autowired
-    public MessageService(MessageRepository messageRepository){
+    public MessageService(MessageRepository messageRepository, AccountRepository accountRepository){
         this.messageRepository = messageRepository;
         this.accountRepository = accountRepository;
     }

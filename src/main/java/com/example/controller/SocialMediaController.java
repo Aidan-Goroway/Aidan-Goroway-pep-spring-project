@@ -3,10 +3,8 @@ package com.example.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -100,7 +96,7 @@ public class SocialMediaController {
 
 
     /*
-    HANDLER 3: Post new Message
+    HANDLER 3: Post new Message [DONE]
 
     As a user, I should be able to submit a new post on the endpoint POST localhost:8080/messages. 
     The request body will contain a JSON representation of a message, which should be persisted to the database, 
@@ -128,9 +124,7 @@ public class SocialMediaController {
             else{
                 return ResponseEntity.status(400).body(null);
             }
-            // return ResponseEntity.ok(messageService.postNewMessage(message));
         }
-
     }
 
     /*
